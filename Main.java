@@ -1,17 +1,23 @@
-package main;
 
-import processing.core.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import processing.core.PApplet;
 
 public class Main extends PApplet {
+	//Add this to get screen height and width
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int Width = (int) screenSize.getWidth();
+	int Height = (int) screenSize.getHeight();
+	
 	int xPos = 100;
 	int yPos = 100;
+	int ASDSxpos = (int)random(0, Width - 100);
+	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);
 	Rocket spaceX = new Rocket(this, 200, 200);
-	int ASDSxpos = (int)random(0, 1340);
-	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, 870, 200, 30);
-	
+
 	public static void main(String[] args) {
 		PApplet.main("main.Main");
-		
 		
     }
 	public void settings(){
