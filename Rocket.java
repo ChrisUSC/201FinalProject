@@ -3,61 +3,83 @@ package main;
 import processing.core.*;
 
 public class Rocket {
-	float xPos;
-	float yPos;
-	int state;
-	float xSpeed;
-	float ySpeed;
-	PApplet parent; // The parent PApplet that we will render ourselves onto
+	private float xpos;
+	private float ypos;
+//	private int state;
+	private float ySpeed;
+	private PApplet parent;
 
 	
-	public Rocket(PApplet p, int xPos, int yPos){
+	public Rocket(PApplet p, int xpos, int ypos){
 		parent = p;
-		this.xPos = xPos;
-		this.yPos = yPos;
-		xSpeed = 0;
+		this.xpos = xpos;
+		this.ypos = ypos;
 		ySpeed = 0;
 	}
 	
 	public void display() {
 		parent.noStroke();
 		parent.smooth();
-		// body
-		parent.fill(255, 255, 255);
-		parent.rect(xPos, yPos, 80, 50);
-		// head
-		parent.fill(0, 0, 0);
-		parent.triangle(xPos+80, yPos, xPos+100, yPos+25, xPos+80, yPos+50);
-		// porthole
-		parent.stroke(1);
-		parent.fill(0, 0, 255);
-		parent.ellipse(xPos+50, yPos+25, 15, 15);
-		// upper wing
+		
+		// xpos and ypos are the coordinates of the top left corner of the DEFAULT rectangle
+		// 1
+		parent.fill(200);
 		parent.noStroke();
-		parent.fill(0, 0, 0);
-		parent.triangle(xPos, yPos, xPos, yPos-30, xPos+30, yPos);
-		// lower wing
-		parent.fill(0, 0, 0);
-		parent.triangle(xPos, yPos+50, xPos, yPos+80, xPos+30, yPos+50);
-		// flames
-		parent.fill(255, 0, 0);
-		parent.triangle(xPos, yPos, xPos, yPos+16, xPos-16, yPos+8);
-		parent.triangle(xPos, yPos+16, xPos, yPos+33, xPos-16, yPos+25);
-		parent.triangle(xPos, yPos +33, xPos, yPos+50, xPos-16, yPos+42);
+		parent.ellipse(xpos+28, ypos-23, 36 ,36); 
+
+		// 2
+		parent.fill(255);
+		parent.ellipse(xpos+28, ypos-23, 36, 36);
+
+		// 3
+		parent.fill(255);
+		parent.noStroke();
+		parent.rect(xpos+10, ypos-25, 36, 100);
+
+		// 4
+		parent.fill(150);
+		parent.rect(xpos+17, ypos-25, 23, 10);
+		parent.fill(100);
+		  
+		// DEFAULT
+		parent.noStroke();
+		parent.rect(xpos, ypos, 10, 100);
+
+		// 5
+		parent.fill(100);
+		parent.noStroke();
+		parent.rect(xpos+46, ypos, 10, 100);
+
+		// 6
+		parent.fill(100);
+		parent.noStroke();
+		parent.rect(xpos+23, ypos, 10, 100);
 	}
 	
+	// accelerates the rocket down
 	public void gravity() {
-		ySpeed += 0.1;
+		ypos = ypos + ySpeed;
+		ySpeed += 0.05;
 	}
 	
-	public void accelerate(){
-		xSpeed += 0.2;
+	// moves the rocket left and right
+	public void moveRight(){
+		xpos += 4;
 	}
 	
-	public void run() {
-	    xPos = xPos + xSpeed;
-	    yPos = yPos + ySpeed;
+	public void moveLeft(){
+		xpos -= 4;
 	}
+	
+	// getters 
+	public float getXpos() {
+		return xpos;
+	}
+
+	public float getYpos() {
+		return ypos;
+	}
+	
 
 }
 
