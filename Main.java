@@ -1,24 +1,31 @@
-package main;
 
-import processing.core.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import processing.core.PApplet;
 
 public class Main extends PApplet {
+	//Add this to get screen height and width
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int Width = (int) screenSize.getWidth();
+	int Height = (int) screenSize.getHeight();
+	
 	int xPos = 100;
 	int yPos = 100;
-	Rocket r = new Rocket(this, 200, 200);
-	
+	int ASDSxpos = (int)random(0, Width - 100);
+	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);
+	Rocket spaceX = new Rocket(this, 200, 200);
+
 	public static void main(String[] args) {
 		PApplet.main("main.Main");
-		
 		
     }
 	public void settings(){
 		fullScreen();
-
 	}
 	
 	public void setup(){
-		background(100);
+		background(0);
 		smooth();
 	}
 
@@ -26,13 +33,21 @@ public class Main extends PApplet {
 		if(mousePressed) {
 			System.exit(0);
 		}
-		r.run();
-		r.gravity();
-		if(keyPressed){
-			r.accelerate();
+		
+		if(spaceX.getYpos() + 134 < height){
+			spaceX.gravity();
+			if(keyPressed){
+				if(keyCode == LEFT){
+					spaceX.moveLeft();
+				}
+				if(keyCode == RIGHT){
+					spaceX.moveRight();
+				}
+			}
 		}
-		background(100);
-		r.display();
+		background(0);
+		spaceX.display();
+		ASDS.display();
 		
 	}
 }
