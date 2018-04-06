@@ -11,6 +11,7 @@ public class Main extends PApplet {
 	int Height = (int) screenSize.getHeight();
 	PImage img; // background image
 	boolean rocketLanded = false;
+	boolean rocketCrashed = false;
 	
 	int xPos = 100;
 	int yPos = 100;
@@ -39,10 +40,13 @@ public class Main extends PApplet {
 			}
 		}
 		
-		if(spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 134){
+		if(spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 134 && spaceX.getYpos() < Height - 130){
 			rocketLanded = true;
-		}
-		else{
+		}else{
+			if(spaceX.getYpos() > Height - 130 && !rocketCrashed){
+				System.out.println("Rocket crashed");
+				rocketCrashed = true;
+			}
 			spaceX.gravity();
 			if(keyPressed){
 				if(keyCode == LEFT){
@@ -60,13 +64,12 @@ public class Main extends PApplet {
 			}
 		}
 		if(rocketLanded){
+			rocketLanded = false;
 			if(mousePressed){
 				image(img, 0, 0);
-				rocketLanded = false;
 				spaceX = new Rocket(this, 200, 200);
 				ASDSxpos = (int)random(0, Width - 100);
-				ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);
-				
+				ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);	
 			}
 		}else{
 			image(img, 0, 0);
