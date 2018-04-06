@@ -65,6 +65,13 @@ public class Main extends PApplet {
 		}
 		if(rocketLanded){
 			rocketLanded = false;
+			
+			int curLevel = spaceX.getLevel();	//Get level
+			int newLevel = curLevel + 1;
+			spaceX.setLevel(newLevel);			//Increment level, rocket speed is linear function of level
+			ASDS.setLevel(newLevel);
+			ASDS.changeWidth();					//Decrease width of platform based on increasing level
+			
 			if(mousePressed){
 				image(img, 0, 0);
 				spaceX = new Rocket(this, 200, 200);
