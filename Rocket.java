@@ -32,7 +32,7 @@ public class Rocket {
 		parent.ellipse(xpos+28, ypos-23, 36, 36);
 
 		// 3
-		parent.fill(255);
+		parent.fill(255, 140, 0);
 		parent.noStroke();
 		parent.rect(xpos+10, ypos-25, 36, 100);
 
@@ -41,18 +41,20 @@ public class Rocket {
 		parent.rect(xpos+17, ypos-25, 23, 10);
 		parent.fill(100);
 		  
-		// DEFAULT
-		parent.noStroke();
+		// left rectangle
+		//parent.noStroke();
+		parent.stroke(1);
 		parent.rect(xpos, ypos, 10, 100);
 
-		// 5
+		// right rectangle
 		parent.fill(100);
-		parent.noStroke();
+		parent.stroke(1);
+		//parent.noStroke();
 		parent.rect(xpos+46, ypos, 10, 100);
 
-		// 6
+		// center rectangle
 		parent.fill(100);
-		parent.noStroke();
+		parent.stroke(1);
 		parent.rect(xpos+23, ypos, 10, 100);
 	}
 	
@@ -64,11 +66,11 @@ public class Rocket {
 	
 	// moves the rocket left and right
 	public void moveRight(){
-		xpos += 4;
+		xpos += 6;
 	}
 	
 	public void moveLeft(){
-		xpos -= 4;
+		xpos -= 6;
 	}
 	
 	// getters 
@@ -78,6 +80,10 @@ public class Rocket {
 
 	public float getYpos() {
 		return ypos;
+	}
+	
+	public void setXpos(int xpos) {
+		this.xpos = xpos;
 	}
 	
 

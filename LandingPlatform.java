@@ -17,7 +17,7 @@ public class LandingPlatform {
 		this.height = height;
 	}
 	public void display() {
-		parent.fill(255, 0, 0);
+		parent.fill(200, 200, 200);
 		parent.rect(xpos, ypos, width, height);
 	}
 
