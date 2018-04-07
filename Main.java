@@ -6,18 +6,19 @@ import java.awt.Toolkit;
 import processing.core.*;
 
 public class Main extends PApplet {
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int Width = (int) screenSize.getWidth();
-	int Height = (int) screenSize.getHeight();
-	PImage img; // background image
-	boolean rocketLanded = false;
-	boolean rocketCrashed = false;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private int Width = (int) screenSize.getWidth();
+	private int Height = (int) screenSize.getHeight();
+	private PImage img; // background image
+	private boolean rocketLanded = false;
+	private boolean rocketCrashed = false;
+	private int level = 1;
 	
 	int xPos = 100;
 	int yPos = 100;
 	Rocket spaceX = new Rocket(this, 200, 200);
 	int ASDSxpos = (int)random(0, Width - 100);
-	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);
+	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, Height - 50, 200, 50);
 	
 	public static void main(String[] args) {
 		PApplet.main("main.Main");	
@@ -29,7 +30,6 @@ public class Main extends PApplet {
 	
 	public void setup(){
 		img = loadImage("https://farm1.staticflickr.com/796/40348333165_55d0b788f5_o_d.jpg");
-
 		smooth();
 	}
 
@@ -40,14 +40,14 @@ public class Main extends PApplet {
 			}
 		}
 		
-		if(spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 134 && spaceX.getYpos() < Height - 130){
+		if(spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 150 && spaceX.getYpos() < Height - 130){
 			rocketLanded = true;
 		}else{
 			if(spaceX.getYpos() > Height - 130 && !rocketCrashed){
 				System.out.println("Rocket crashed");
 				rocketCrashed = true;
 			}
-			spaceX.gravity();
+			spaceX.gravity(level);
 			if(keyPressed){
 				if(keyCode == LEFT){
 					spaceX.moveLeft();
@@ -65,23 +65,19 @@ public class Main extends PApplet {
 		}
 		if(rocketLanded){
 			rocketLanded = false;
-			
-			int curLevel = spaceX.getLevel();	//Get level
-			int newLevel = curLevel + 1;
-			spaceX.setLevel(newLevel);			//Increment level, rocket speed is linear function of level
-			ASDS.setLevel(newLevel);
-			ASDS.changeWidth();					//Decrease width of platform based on increasing level
-			
 			if(mousePressed){
+				level++;
 				image(img, 0, 0);
 				spaceX = new Rocket(this, 200, 200);
 				ASDSxpos = (int)random(0, Width - 100);
-				ASDS = new LandingPlatform(this, ASDSxpos, Height - 30, 200, 30);	
+				ASDS = new LandingPlatform(this, ASDSxpos, Height - 50, 200, 50);	
 			}
 		}else{
 			image(img, 0, 0);
 			spaceX.display();
 			ASDS.display();
+			textSize(20);
+			text("Level: " + level, 20, 40);
 		}
 		
 	}
