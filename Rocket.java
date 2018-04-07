@@ -8,7 +8,6 @@ public class Rocket {
 //	private int state;
 	private float ySpeed;
 	private PApplet parent;
-	private int level = 1;
 
 	
 	public Rocket(PApplet p, int xpos, int ypos){
@@ -60,18 +59,18 @@ public class Rocket {
 	}
 	
 	// accelerates the rocket down
-	public void gravity() {
-		ypos = ypos + ySpeed + (level / 40);
-		ySpeed += 0.05;
+	public void gravity(int level) {
+		ypos = ypos + ySpeed;
+		ySpeed = (float) (ySpeed + 0.01 + ((float)level/60));
 	}
 	
 	// moves the rocket left and right
 	public void moveRight(){
-		xpos += 6;
+		xpos += 8;
 	}
 	
 	public void moveLeft(){
-		xpos -= 6;
+		xpos -= 8;
 	}
 	
 	// getters 
@@ -86,15 +85,6 @@ public class Rocket {
 	public void setXpos(int xpos) {
 		this.xpos = xpos;
 	}
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	
 
 }
 
