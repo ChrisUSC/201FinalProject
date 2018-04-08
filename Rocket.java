@@ -59,18 +59,18 @@ public class Rocket {
 	}
 	
 	// accelerates the rocket down
-	public void gravity() {
+	public void gravity(int level) {
 		ypos = ypos + ySpeed;
-		ySpeed += 0.05;
+		ySpeed = (float) (ySpeed + 0.01 + ((float)level/60));
 	}
 	
 	// moves the rocket left and right
 	public void moveRight(){
-		xpos += 6;
+		xpos += 8;
 	}
 	
 	public void moveLeft(){
-		xpos -= 6;
+		xpos -= 8;
 	}
 	
 	// getters 
@@ -85,7 +85,6 @@ public class Rocket {
 	public void setXpos(int xpos) {
 		this.xpos = xpos;
 	}
-	
 
 }
 
