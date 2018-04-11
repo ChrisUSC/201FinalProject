@@ -76,14 +76,14 @@ public class Main extends PApplet {
 		
 		int Rx = (int) spaceX.getXpos();
 		int Ry = (int) spaceX.getYpos();
+		
 		if((Rx + 55 >= blackHoleX1 - 30) && (Ry - 20 < blackHoleY1 + 30) && (Ry + 100 > blackHoleY1 - 30)){
 			spaceX.setXpos(0);
 			spaceX.setYpos(0);
+		}else if((Rx < blackHoleX1 + 20) && (Rx > blackHoleX1 - 20) && (Ry - 20 < blackHoleY1 + 30) && (Ry + 100 > blackHoleY1 - 30)){
+			spaceX.setXpos(0);
+			spaceX.setYpos(0);
 		}
-//		}else if((Rx < blackHoleX1 + 30) && (Ry - 20 < blackHoleY1 + 30) && (Ry + 100 > blackHoleY1 - 30)){
-//			spaceX.setXpos(0);
-//			spaceX.setYpos(0);
-//		}
 		
 		if(rocketLanded){
 			rocketLanded = false;
