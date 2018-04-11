@@ -85,6 +85,10 @@ public class Rocket {
 	public void setXpos(int xpos) {
 		this.xpos = xpos;
 	}
+	
+	public void setYpos(int ypos) {
+		this.ypos = ypos;
+	}
 
 }
 
