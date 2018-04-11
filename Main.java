@@ -3,7 +3,8 @@ package main;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Main extends PApplet {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -16,9 +17,18 @@ public class Main extends PApplet {
 	
 	int xPos = 100;
 	int yPos = 100;
-	Rocket spaceX = new Rocket(this, 200, 200);
+	Rocket spaceX = new Rocket(this, Width/2 -28, -100);
 	int ASDSxpos = (int)random(0, Width - 100);
 	LandingPlatform ASDS = new LandingPlatform(this, ASDSxpos, Height - 50, 200, 50);
+	BlackHole bh1 = new BlackHole(this);
+	int blackHoleX1 = (int)random(200, 1200);
+	int blackHoleY1 = (int)random(150, 750);
+	BlackHole bh2 = new BlackHole(this);
+	int blackHoleX2 = (int)random(200, 1200);
+	int blackHoleY2 = (int)random(150, 750);
+	BlackHole bh3 = new BlackHole(this);
+	int blackHoleX3 = (int)random(200, 1200);
+	int blackHoleY3 = (int)random(150, 750);
 	
 	public static void main(String[] args) {
 		PApplet.main("main.Main");	
@@ -63,14 +73,32 @@ public class Main extends PApplet {
 				spaceX.setXpos(0);
 			}
 		}
+		
+		int Rx = (int) spaceX.getXpos();
+		int Ry = (int) spaceX.getYpos();
+		if((Rx + 55 >= blackHoleX1 - 30) && (Ry - 20 < blackHoleY1 + 30) && (Ry + 100 > blackHoleY1 - 30)){
+			spaceX.setXpos(0);
+			spaceX.setYpos(0);
+		}
+//		}else if((Rx < blackHoleX1 + 30) && (Ry - 20 < blackHoleY1 + 30) && (Ry + 100 > blackHoleY1 - 30)){
+//			spaceX.setXpos(0);
+//			spaceX.setYpos(0);
+//		}
+		
 		if(rocketLanded){
 			rocketLanded = false;
 			if(mousePressed){
 				level++;
 				image(img, 0, 0);
-				spaceX = new Rocket(this, 200, 200);
+				spaceX = new Rocket(this, Width/2 -28, -100);
 				ASDSxpos = (int)random(0, Width - 100);
-				ASDS = new LandingPlatform(this, ASDSxpos, Height - 50, 200, 50);	
+				ASDS = new LandingPlatform(this, ASDSxpos, Height - 50, 200, 50);
+				blackHoleX1 = (int)random(200, 1200);
+				blackHoleY1 = (int)random(150, 750);
+//				blackHoleX2 = (int)random(200, 1200);
+//				blackHoleY2 = (int)random(150, 750);
+//				blackHoleX3 = (int)random(200, 1200);
+//				blackHoleY3 = (int)random(150, 750);
 			}
 		}else{
 			image(img, 0, 0);
@@ -78,6 +106,9 @@ public class Main extends PApplet {
 			ASDS.display();
 			textSize(20);
 			text("Level: " + level, 20, 40);
+			bh1.display(blackHoleX1, blackHoleY1);
+//			bh2.display(blackHoleX2, blackHoleY2);
+//			bh3.display(blackHoleX3, blackHoleY3);
 		}
 		
 	}
