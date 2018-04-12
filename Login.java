@@ -10,7 +10,7 @@ public class Login extends PApplet {
 	int Width = (int) screenSize.getWidth();
 	int Height = (int) screenSize.getHeight();
 	Data data;
-	
+	PImage bg; // background image
 
 	String err_msg = "";
 	boolean firstTimeErr = true; // prevent incorrect submit at first time
@@ -28,6 +28,8 @@ public class Login extends PApplet {
 		  PFont font = createFont("arial",40);
 		  cp5 = new ControlP5(this);
 
+		  bg = loadImage("files/bg.jpg");
+		  smooth();
 		  // Add Logo and name of login		  
 		  
 		  Textfield t1 = cp5.addTextfield("Username")
@@ -35,14 +37,15 @@ public class Login extends PApplet {
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
-		    .setColor(color(255, 255, 255));
+		    .setColorBackground(0xffffff);
+		  
 		  
 		  Textfield t2 = cp5.addTextfield("Password")
 		    .setPosition(Width/4, 5*Height/8)
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
-		    .setColor(color(255, 255, 255));
+		    .setColorBackground(0xffffff);
 		 
 		  textFont(font);
 		  Label label1 = t1.getCaptionLabel(); 
@@ -54,40 +57,32 @@ public class Login extends PApplet {
 		  label2.getStyle().setPaddingTop(-100);
 		  
 		  cp5.addButton("LogIn")
-		   //Set the position of the button : (X,Y)
-		   .setPosition(3*Width/8,3*Height/4)
-		   //Set the size of the button : (X,Y)
-		   .setSize(Width/4,50)
-		   //Set the pre-defined Value of the button : (int)
+		   .setPosition((float) (3.3*Width/8),3*Height/4)
+		   .setImages(loadImage("files/logButton.png"), loadImage("files/logButton.png"), loadImage("files/logButton.png"))
+		   .updateSize()
 		   .setValue(0)
-		   //set the way it is activated : RELEASE the mouseboutton or PRESS it
 		   .activateBy(ControlP5.PRESSED);
 		   ;
 		   
 		  cp5.addButton("Back")
-		   //Set the position of the button : (X,Y)
 		   .setPosition(50,50)
-		   //Set the size of the button : (X,Y)
-		   .setSize(100,80)
-		   //Set the pre-defined Value of the button : (int)
+		   .setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		   .updateSize()
 		   .setValue(0)
-		   //set the way it is activated : RELEASE the mouseboutton or PRESS it
 		   .activateBy(ControlP5.PRESSED);
 		   ;
 		} 
 
 	public void draw() {
-	  background(0);
-	  fill(255, 0, 0);
-	  if (err_msg.equals("Incorrect password")) {
-		  text(err_msg, 3*Width/8, 7*Height/8);
-	  } else {
-		  text(err_msg, 100, 7*Height/8);
-	  }
-	  fill(255);
-	  textSize(60); 
-	  text("Log In", 7*Width/16, Height/3);
-	}
+		background(bg);
+		textSize(25); 
+		fill(255, 0, 0);
+		if (err_msg.equals("Incorrect password")) {
+			text(err_msg, 3*Width/8, (float) (4.7*Height/8));
+		} else {
+			text(err_msg, 2*Width/8, (float) (4.5*Height/8));
+		}
+}
 	
 	// get called when button pressed
 	public void LogIn(int value){
@@ -110,7 +105,7 @@ public class Login extends PApplet {
 				System.out.println("Successfully logged in!");
 				err_msg = "Successfully logged in!";
 				checked = true;
-				PApplet.main("Main");
+				PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main(username));
 				break;
 			} else if (username.toLowerCase().equals(user.getName())) {
 				// gets here b/c password incorrect
@@ -131,18 +126,14 @@ public class Login extends PApplet {
 			firstTimeBack = false;
 			return;
 		}
+		//LandIt.stopAudio();
 		PApplet.main("LandIt");
-	}
-
-	/*
-	public void controlEvent(ControlEvent theEvent) {
-	  if(theEvent.isAssignableFrom(Textfield.class)) {
-	    println("controlEvent: accessing a string from controller '"
-	            +theEvent.getName()+"': "
-	            +theEvent.getStringValue()
-	            );
-	  }
-	}
-	*/
+	}	
 	
+	public void keyPressed() {
+		if(keyCode == ESC){
+			LandIt.stopAudio();
+			System.exit(0);
+		}
+	}
 }
