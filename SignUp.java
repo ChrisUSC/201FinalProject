@@ -16,6 +16,7 @@ public class SignUp extends PApplet {
 	Data data;
 	private static Gson gson = new Gson();
 	private String file_path = "data.json"; // static file path
+	PImage bg; // background image
 
 	String err_msg = "";
 	boolean firstTimeErr = true; // prevent incorrect submit at first time
@@ -40,6 +41,7 @@ public class SignUp extends PApplet {
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
+		    .setColorBackground(0xffffff)
 		    .setColor(color(255, 255, 255));
 		  
 		  Textfield t2 = cp5.addTextfield("Password")
@@ -47,6 +49,7 @@ public class SignUp extends PApplet {
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
+		    .setColorBackground(0xffffff)
 		    .setColor(color(255, 255, 255));
 		 
 		  textFont(font);
@@ -59,39 +62,34 @@ public class SignUp extends PApplet {
 		  label2.getStyle().setPaddingTop(-100);
 		  
 		  cp5.addButton("SignUp")
-		   //Set the position of the button : (X,Y)
-		   .setPosition(3*Width/8,3*Height/4)
-		   //Set the size of the button : (X,Y)
-		   .setSize(Width/4,50)
-		   //Set the pre-defined Value of the button : (int)
+		   .setPosition((float) (3.3*Width/8),3*Height/4)
+		   .setImages(loadImage("files/signButton.png"), loadImage("files/signButton.png"), loadImage("files/signButton.png"))
+		   .updateSize()
 		   .setValue(0)
-		   //set the way it is activated : RELEASE the mouseboutton or PRESS it
 		   .activateBy(ControlP5.PRESSED);
 		   ;
 		   
 		  cp5.addButton("Back")
-		   //Set the position of the button : (X,Y)
 		   .setPosition(50,50)
-		   //Set the size of the button : (X,Y)
-		   .setSize(100,80)
-		   //Set the pre-defined Value of the button : (int)
+		   .setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		   .updateSize()
 		   .setValue(0)
-		   //set the way it is activated : RELEASE the mouseboutton or PRESS it
 		   .activateBy(ControlP5.PRESSED);
 		   ;
 		} 
 
 	public void draw() {
-	  background(0);
+	  background(bg);
+	  textSize(25); 
 	  fill(255, 0, 0);
-	  text(err_msg, 3*Width/8, 7*Height/8);
-	  fill(255);
-	  textSize(60); 
-	  text("Sign Up", 7*Width/16, Height/3);
+	  //text(err_msg, 2*Width/8, 7*Height/8);
+	  text(err_msg, 2*Width/8, (float) (4.5*Height/8));
 	}
 	
 	// get called when button pressed
 	public void SignUp(int value) throws IOException{
+		bg = loadImage("files/bg.jpg");
+		smooth();
 		if (firstTimeErr) {
 			firstTimeErr = false;
 			return;
@@ -134,6 +132,7 @@ public class SignUp extends PApplet {
 				fileWriter.close();
 				System.out.println("Sign up successful!");
 				err_msg = "Sign up successful!";
+				PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main(username));
 			}
 		}
 	}
