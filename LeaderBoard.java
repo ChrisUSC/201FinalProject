@@ -53,32 +53,32 @@ public class LeaderBoard extends PApplet{
 	}
 	
 	public static void main(String[] args) {
-		initializeBoard(board);
-		//PApplet.main("LeaderBoard");
-		try {
-			System.out.println("Binding to port 6789");
-			ServerSocket ss = new ServerSocket(6789);
-			System.out.println("Bound to port " + 6789);
-			while(true) {
-				Socket s = ss.accept();
-				System.out.println("Connection from: " + s.getInetAddress());
-				ois = new ObjectInputStream(s.getInputStream());
-				ScoreMsg sm = (ScoreMsg)ois.readObject();
-				System.out.println(sm.getScore());
-				System.out.println(sm.getUsername());
-				addScore(board, sm);
-				PApplet.main("LeaderBoard");
-			}
-		} catch (IOException ioe) {
-			System.out.println("ioe in networking: " + ioe.getMessage());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+//		//initializeBoard(board);
+//		//PApplet.main("LeaderBoard");
+//		try {
+//			System.out.println("Binding to port 6789");
+//			ServerSocket ss = new ServerSocket(6789);
+//			System.out.println("Bound to port " + 6789);
+//			while(true) {
+//				Socket s = ss.accept();
+//				System.out.println("Connection from: " + s.getInetAddress());
+//				ois = new ObjectInputStream(s.getInputStream());
+//				ScoreMsg sm = (ScoreMsg)ois.readObject();
+//				System.out.println(sm.getScore());
+//				System.out.println(sm.getUsername());
+//				//addScore(board, sm);
+//				PApplet.main("LeaderBoard");
+//			}
+//		} catch (IOException ioe) {
+//			System.out.println("ioe in networking: " + ioe.getMessage());
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	// based on the assumption the board is sorted
 	// add sm to a correct position
-	private static void addScore(ArrayList<ScoreMsg> board, ScoreMsg sm) {
+	public static void addScore(ScoreMsg sm) {
 		for (int i = 0; i<board.size(); i++) {
 			if(board.get(i).getScore() < sm.getScore()) {
 				board.add(i, sm);
@@ -90,7 +90,7 @@ public class LeaderBoard extends PApplet{
 		return;
 	}
 	
-	private static void initializeBoard(ArrayList<ScoreMsg> board) {
+	public static void initializeBoard() {
 		for (int i = 0; i<5; i++) {
 			ScoreMsg sm = new ScoreMsg("Unkown Ailen", 0);
 			board.add(sm);
