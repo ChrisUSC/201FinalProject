@@ -2,22 +2,26 @@ import processing.core.*;
 import java.io.*;
 import java.util.*;
 import com.google.gson.*;
-
 import controlP5.ControlP5;
 import java.awt.*;
 
 public class LandIt extends PApplet {
+	// for json
 	private static Data data = new Data(new ArrayList<User>()); // global static variable, all function get access to it
 	private static Gson gson = new Gson();
 	private String file_path = "data.json"; // static file path
 	Scanner scanner = new Scanner(System.in);
-
+	
+	PImage bg;
+	PImage logo;
+	
 	ControlP5 cp5;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int Width = (int) screenSize.getWidth();
 	int Height = (int) screenSize.getHeight();
 	
-	boolean firstTimePlay = true; // prevent incorrect submit at first time
+	// prevent submit at first time in page
+	boolean firstTimePlay = true; 
 	boolean firstTimeLog = true;
 	boolean firstTimeSign = true;
 	
@@ -26,47 +30,53 @@ public class LandIt extends PApplet {
 	}
 	
 	public void draw() {
-		background(0);
+		background(bg);
+		fill(255);
+		textSize(12); 
+		text("CSCI201L@\nEric Yihan Chen\nChristopher Pack\nDamiano Carrioli\nAnant Chandra", 13*Width/14, 7*Height/8);
 	}
 	
-	public void setup() {
-		//noLoop();
-		//initializeData();
-
+	public void keyPressed() {
+		// exit
+		if(keyCode == ESC){
+			LandIt.stopAudio();
+			System.exit(0);
+		}
 		
-	  PFont font = createFont("arial",40);
-	  cp5 = new ControlP5(this);
-
-	  cp5.addButton("Play")
-	   //Set the position of the button : (X,Y)
-	   .setPosition(Width/4,1*Height/3)
-	   //Set the size of the button : (X,Y)
-	   .setSize(Width/2,50)
-	   //Set the pre-defined Value of the button : (int)
-	   .setValue(0)
-	   //set the way it is activated : RELEASE the mouseboutton or PRESS it
-	   .activateBy(ControlP5.PRESSED);
-		
-	  cp5.addButton("LogIn")
-	   //Set the position of the button : (X,Y)
-	   .setPosition(Width/4,2*Height/3)
-	   //Set the size of the button : (X,Y)
-	   .setSize(Width/5,50)
-	   //Set the pre-defined Value of the button : (int)
-	   .setValue(0)
-	   //set the way it is activated : RELEASE the mouseboutton or PRESS it
-	   .activateBy(ControlP5.PRESSED);
-	   
-	  cp5.addButton("SignUp")
-	   //Set the position of the button : (X,Y)
-	   .setPosition(2*Width/4,2*Height/3)
-	   //Set the size of the button : (X,Y)
-	   .setSize(Width/5,50)
-	   //Set the pre-defined Value of the button : (int)
-	   .setValue(0)
-	   //set the way it is activated : RELEASE the mouseboutton or PRESS it
-	   .activateBy(ControlP5.PRESSED);
+		// no music
+		if(keyCode == TAB){
+			LandIt.stopAudio();
+		}
+	}
 	
+	public void setup() {		
+		PFont font = createFont("arial",40);
+		cp5 = new ControlP5(this);
+		
+		bg = loadImage("files/login.jpg");
+		logo = loadImage("files/logo.png");
+		smooth();
+		  
+		cp5.addButton("Play")
+			.setPosition(Width/4,Height/8)
+		    .setImages(loadImage("files/logo.png"), loadImage("files/logo.png"), loadImage("files/logo.png"))
+		    .updateSize()
+		   	.setValue(0)
+		   	.activateBy(ControlP5.PRESSED);
+			
+		cp5.addButton("LogIn")
+		.setPosition(1*Width/8,5*Height/8)
+	    .setImages(loadImage("files/logButton.png"), loadImage("files/logButton.png"), loadImage("files/logButton.png"))
+	    .updateSize()
+	   	.setValue(0)
+	   	.activateBy(ControlP5.PRESSED);
+		   
+		cp5.addButton("SignUp")
+		     .setPosition(5*Width/8,5*Height/8)
+		     .setImages(loadImage("files/signButton.png"), loadImage("files/signButton.png"), loadImage("files/signButton.png"))
+		     .updateSize()
+		   	 .setValue(0)
+		   	 .activateBy(ControlP5.PRESSED);
 	}
 	
 	public LandIt() {
@@ -78,18 +88,39 @@ public class LandIt extends PApplet {
 	}
 	
 	public static void main(String[] args) {
-		//LandIt landit = new LandIt();
-		//PApplet.main("Main");
-		//PApplet.main("Login");
-		PApplet.main("LandIt");
+	    Sound back = new Sound("background");
+	    back.start();
+	 	PApplet.main("LandIt");
+		//stopAudio();
     }
+	
+	public static void playAudio(String name) {
+		String[] cmd = {"afplay", name};
+		try {
+			Process p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void stopAudio() {
+		String[] cmd = {"killall", "afplay"};
+		try {
+			Process p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void Play(int value) {
 		if (firstTimePlay) {
 			firstTimePlay = false;
 			return;
 		}
-		PApplet.main("Main");
+		//PApplet.main("Main");
+		PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main("Guest"));
 	}
 	
 	public void LogIn(int value) {
@@ -107,8 +138,6 @@ public class LandIt extends PApplet {
 		}
 		PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new SignUp(data));
 	}
-	
-	
 	
 	// function to ask if user wants login or sign up
 	// take care of invalid number, and string input
