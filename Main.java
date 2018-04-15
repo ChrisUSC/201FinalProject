@@ -68,7 +68,7 @@ public class Main extends PApplet {
             rocketLanded = true;
         }else{
             if(spaceX.getYpos() > Height - 130 && !rocketCrashed){
-                System.out.println("Rocket crashed");
+                
 //              try {
 //                  Socket s = new Socket("localhost", 6789);
 //                  ScoreMsg sm = new ScoreMsg(name, level);
@@ -81,6 +81,10 @@ public class Main extends PApplet {
 //                  e.printStackTrace();
 //              }
                 rocketCrashed = true;
+                System.out.println("Rocket crashed");
+            	//Tell the user they crashed
+            	textSize(40);
+                text("Rocket Crashed, Better Luck next time" , 200, 400);
             }
             spaceX.gravity(level);
             if(keyPressed){
@@ -123,6 +127,10 @@ public class Main extends PApplet {
         }
         
         if(rocketLanded){
+        	//This is to tell the user the landed and what to do next
+        	textSize(40);
+            text("Rocket Landed, Please click the mouse or trackpad to continue" , 200, 400);
+            //End of changes
             rocketLanded = false;
             if(mousePressed){
                 level++;
