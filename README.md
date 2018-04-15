@@ -1,5 +1,5 @@
 # 201 Final Project
-Christopher Pack
-Damiano Carrioli
-Eric Yihan Chen
+Christopher Pack <br />
+Damiano Carrioli <br />
+Eric Yihan Chen <br />
 Anant Chandra
