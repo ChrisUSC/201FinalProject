@@ -1,5 +1,3 @@
-package main;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -55,17 +53,18 @@ public class Main extends PApplet {
 	boolean star2hit = false;
 	boolean star3hit = false;
 	boolean star4hit = false;
+	
+	boolean firstTimeLand = false;
+	boolean firstTimeCrash = false;
 
-	public static void main(String[] args) {
-		PApplet.main("main.Main");
-	}
-
-	// public Main(String name) {
-	// this.name = name;
-	// }
+	 public Main(String name) {
+		 this.name = name;
+	 }
 
 	public void settings() {
 		fullScreen();
+		 Sound back = new Sound("launch");
+		 back.start();
 	}
 
 	public void setup() {
@@ -83,20 +82,24 @@ public class Main extends PApplet {
 		if (spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 150
 				&& spaceX.getYpos() < Height - 130) {
 			rocketLanded = true;
+			if (!firstTimeLand) {
+			    Sound back = new Sound("land");
+			    back.start();
+			    firstTimeLand = true;
+			}
 		} else {
 			if (spaceX.getYpos() > Height - 130 && !rocketCrashed) {
-
-				// try {
-				// Socket s = new Socket("localhost", 6789);
-				// ScoreMsg sm = new ScoreMsg(name, level);
-				// oos = new ObjectOutputStream(s.getOutputStream());
-				// oos.writeObject(sm);
-				// oos.flush();
-				// } catch (UnknownHostException e) {
-				// e.printStackTrace();
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
+				 try {
+					 Socket s = new Socket("localhost", 6789);
+					 ScoreMsg sm = new ScoreMsg(name, level);
+					 oos = new ObjectOutputStream(s.getOutputStream());
+					 oos.writeObject(sm);
+					 oos.flush();
+				 } catch (UnknownHostException e) {
+					 e.printStackTrace();
+				 } catch (IOException e) {
+					 e.printStackTrace();
+				 }
 				rocketCrashed = true;
 			}
 			spaceX.gravity(level);
@@ -122,21 +125,29 @@ public class Main extends PApplet {
 		if ((abs(Rx + 30 - blackHoleX1) < 60) && (abs(Ry + 60 - blackHoleY1)) < 85) {
 			spaceX.setXpos(blackHoleX2);
 			spaceX.setYpos(blackHoleY2 + 55);
+			Sound back = new Sound("blackhole");
+			back.start();
 		}
 
 		if ((abs(Rx + 30 - blackHoleX2) < 60) && (abs(Ry + 60 - blackHoleY2)) < 85) {
 			spaceX.setXpos(blackHoleX3);
 			spaceX.setYpos(blackHoleY3 + 55);
+			Sound back = new Sound("blackhole");
+			back.start();
 		}
 
 		if ((abs(Rx + 30 - blackHoleX3) < 60) && (abs(Ry + 60 - blackHoleY3)) < 85) {
 			spaceX.setXpos(blackHoleX4);
 			spaceX.setYpos(blackHoleY4 + 55);
+			Sound back = new Sound("blackhole");
+			back.start();
 		}
 
 		if ((abs(Rx + 30 - blackHoleX4) < 60) && (abs(Ry + 60 - blackHoleY4)) < 85) {
 			spaceX.setXpos(blackHoleX1);
 			spaceX.setYpos(blackHoleY1 + 55);
+			Sound back = new Sound("blackhole");
+			back.start();
 		}
 
 		if ((abs(Rx + 30 - star1.getXposition()) < 60) && (abs(Ry + 60 - star1.getYposition())) < 95) {
@@ -146,6 +157,8 @@ public class Main extends PApplet {
 			}
 			star1.setXposition(2000);
 			star1.setYposition(2000);
+			Sound star = new Sound("star");
+			star.start();
 
 		}
 
@@ -156,6 +169,8 @@ public class Main extends PApplet {
 			}
 			star2.setXposition(2000);
 			star2.setYposition(2000);
+			Sound star = new Sound("star");
+			star.start();
 		}
 
 		if ((abs(Rx + 30 - star3.getXposition()) < 60) && (abs(Ry + 60 - star3.getYposition())) < 95) {
@@ -165,6 +180,8 @@ public class Main extends PApplet {
 			}
 			star3.setXposition(2000);
 			star3.setYposition(2000);
+			Sound star = new Sound("star");
+			star.start();
 		}
 
 		if ((abs(Rx + 30 - star4.getXposition()) < 60) && (abs(Ry + 60 - star4.getYposition())) < 95) {
@@ -174,6 +191,8 @@ public class Main extends PApplet {
 			}
 			star4.setXposition(2000);
 			star4.setYposition(2000);
+			Sound star = new Sound("star");
+			star.start();
 		}
 
 		if (rocketLanded) {
@@ -210,7 +229,11 @@ public class Main extends PApplet {
 				star2 = new Star(this, (int) random(100, 650), (int) random(400, 750), 15, 35, 5);
 				star3 = new Star(this, (int) random(700, 1200), (int) random(150, 400), 15, 35, 5);
 				star4 = new Star(this, (int) random(700, 1200), (int) random(400, 750), 15, 35, 5);
+				
+				Sound back = new Sound("launch");
+				back.start();
 
+				firstTimeLand = false;
 			}
 		} else {
 			image(img, 0, 0);
@@ -230,20 +253,28 @@ public class Main extends PApplet {
 				fill(255,0 ,0);
 				textSize(70);
 				text("OH NO, you crashed!", Width / 2 - 350, Height / 2 - 100);
+				if (!firstTimeCrash) {
+					LandIt.stopAudio();
+					Sound back = new Sound("crash");
+					back.start();
+					back = new Sound("boom");
+					back.start();
+					firstTimeCrash = true;
+				}
 			}
 		}
 	}
 
-	// public void keyPressed() {
-	// // exit
-	// if(keyCode == ESC){
-	// LandIt.stopAudio();
-	// System.exit(0);
-	// }
-	//
-	// // no music
-	// if(keyCode == TAB){
-	// LandIt.stopAudio();
-	// }
-	// }
+	 public void keyPressed() {
+	 // exit
+	 if(keyCode == ESC){
+	 LandIt.stopAudio();
+	 System.exit(0);
+	 }
+	
+	 // no music
+	 if(keyCode == TAB){
+	 LandIt.stopAudio();
+	 }
+	 }
 }
