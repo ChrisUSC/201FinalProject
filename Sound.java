@@ -12,17 +12,19 @@ public class Sound extends Thread {
 	
 	private String getFileName(String effect) {
 		if (effect == "background") {
-			return "files/2 Hey Pocky A-Way.m4a";
+			return "src/2 Hey Pocky A-Way.m4a";
 		} else if (effect == "launch") {
-			return "files/Launch.mp3";
+			return "src/Launch.mp3";
 		} else if (effect == "land") {
-			return "files/bingo.mp3";
+			return "src/bingo.mp3";
 		} else if (effect == "crash") {
-			return "files/Houston.m4a";
+			return "src/Houston.m4a";
 		} else if (effect == "blackhole") {
-			return "files/blackhole.m4a";
+			return "src/blackhole.m4a";
 		} else if (effect == "star") {
-			return "files/star.m4a";
+			return "src/star.m4a";
+		} else if (effect == "boom") {
+			return "src/Crash.mp3";
 		}
 		else {
 			return "";
