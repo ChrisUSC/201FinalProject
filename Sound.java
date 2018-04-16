@@ -17,7 +17,13 @@ public class Sound extends Thread {
 			return "files/Launch.mp3";
 		} else if (effect == "land") {
 			return "files/bingo.mp3";
-		} 
+		} else if (effect == "crash") {
+			return "files/Houston.m4a";
+		} else if (effect == "blackhole") {
+			return "files/blackhole.m4a";
+		} else if (effect == "star") {
+			return "files/star.m4a";
+		}
 		else {
 			return "";
 		}
