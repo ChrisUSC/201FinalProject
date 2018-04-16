@@ -18,6 +18,7 @@ public class LeaderBoard extends PApplet{
 	int Height = (int) screenSize.getHeight();
 	PImage bg;
 	PImage logo;
+	boolean firstTimeBack = true;
 	
 	// for Networking
 	ServerSocket ss = null;
@@ -33,6 +34,15 @@ public class LeaderBoard extends PApplet{
 		textSize(40); 
 		bg = loadImage("files/login.jpg");
 		logo = loadImage("files/leader.png");
+		
+		cp5 = new ControlP5(this);
+		
+		cp5.addButton("Back")
+		.setPosition(25,25)
+		.setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		.updateSize()
+		.setValue(0)
+		.activateBy(ControlP5.PRESSED);	
 	}
 	
 	public void draw() {
@@ -40,7 +50,7 @@ public class LeaderBoard extends PApplet{
 		background(bg);
 		image(logo, (float)(2.4*Width/8), (float) (0.3*Height/8));
 		
-		cp5 = new ControlP5(this);
+		
 		text("Rank",  (float)(1.6*Width/8), (float) (2*Height/8));
 		text("Username",  (float) (3.3*Width/8), (float) (2*Height/8));
 		text("Score", (float) (5.8*Width/8), (float) (2*Height/8));
@@ -50,31 +60,32 @@ public class LeaderBoard extends PApplet{
 			text(board.get(i-1).getUsername(), (float) (3.3*Width/8),  (float) ((2+0.8*i)*Height/8));
 			text(board.get(i-1).getScore(), (float) (5.8*Width/8),  (float) ((2+0.8*i)*Height/8));
 		}		
+		
 	}
 	
-	public static void main(String[] args) {
-//		//initializeBoard(board);
-//		//PApplet.main("LeaderBoard");
-//		try {
-//			System.out.println("Binding to port 6789");
-//			ServerSocket ss = new ServerSocket(6789);
-//			System.out.println("Bound to port " + 6789);
-//			while(true) {
-//				Socket s = ss.accept();
-//				System.out.println("Connection from: " + s.getInetAddress());
-//				ois = new ObjectInputStream(s.getInputStream());
-//				ScoreMsg sm = (ScoreMsg)ois.readObject();
-//				System.out.println(sm.getScore());
-//				System.out.println(sm.getUsername());
-//				//addScore(board, sm);
-//				PApplet.main("LeaderBoard");
-//			}
-//		} catch (IOException ioe) {
-//			System.out.println("ioe in networking: " + ioe.getMessage());
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-	}
+//	public static void main(String[] args) {
+////		//initializeBoard(board);
+////		//PApplet.main("LeaderBoard");
+////		try {
+////			System.out.println("Binding to port 6789");
+////			ServerSocket ss = new ServerSocket(6789);
+////			System.out.println("Bound to port " + 6789);
+////			while(true) {
+////				Socket s = ss.accept();
+////				System.out.println("Connection from: " + s.getInetAddress());
+////				ois = new ObjectInputStream(s.getInputStream());
+////				ScoreMsg sm = (ScoreMsg)ois.readObject();
+////				System.out.println(sm.getScore());
+////				System.out.println(sm.getUsername());
+////				//addScore(board, sm);
+////				PApplet.main("LeaderBoard");
+////			}
+////		} catch (IOException ioe) {
+////			System.out.println("ioe in networking: " + ioe.getMessage());
+////		} catch (ClassNotFoundException e) {
+////			e.printStackTrace();
+////		}
+//	}
 	
 	// based on the assumption the board is sorted
 	// add sm to a correct position
@@ -92,10 +103,18 @@ public class LeaderBoard extends PApplet{
 	
 	public static void initializeBoard() {
 		for (int i = 0; i<5; i++) {
-			ScoreMsg sm = new ScoreMsg("Unkown Ailen", 0);
+			ScoreMsg sm = new ScoreMsg("Unkown Alien", 0);
 			board.add(sm);
 		}
 		
+	}
+	
+	public void Back(int value) {
+		if (firstTimeBack) {
+			firstTimeBack = false;
+			return;
+		}
+		PApplet.main("LandIt");
 	}
 	
 	public void keyPressed() {
