@@ -56,9 +56,14 @@ public class Main extends PApplet {
 	
 	boolean firstTimeLand = false;
 	boolean firstTimeCrash = false;
+	boolean guestFunction = false;
+	boolean firstTimeGuestDone = false;
 
 	 public Main(String name) {
 		 this.name = name;
+		 if (name.equals("Guest")) {
+			 guestFunction = true;
+		 }
 	 }
 
 	public void settings() {
@@ -89,9 +94,14 @@ public class Main extends PApplet {
 			}
 		} else {
 			if (spaceX.getYpos() > Height - 130 && !rocketCrashed) {
+				// send user score
 				 try {
 					 Socket s = new Socket("localhost", 6789);
 					 ScoreMsg sm = new ScoreMsg(name, level);
+					 // if it's guest, shouldn't send score
+					 if (guestFunction) {
+						 sm = new ScoreMsg("Unknown Alien", 0);
+					 }
 					 oos = new ObjectOutputStream(s.getOutputStream());
 					 oos.writeObject(sm);
 					 oos.flush();
@@ -262,6 +272,30 @@ public class Main extends PApplet {
 					firstTimeCrash = true;
 				}
 			}
+		}
+		
+		// if guest plays more than 5, stop
+		if (guestFunction && level > 5 && !firstTimeGuestDone) {
+			 try {			
+				 LandIt.stopAudio();
+				 delay(1000);
+				 LandIt.say("Bro, log in next time so you can play more");
+				 delay(3000);
+				 Sound back = new Sound("crash");
+				 back.start();
+				 back = new Sound("boom");	
+				 back.start();
+				 firstTimeGuestDone = true;
+				 Socket s = new Socket("localhost", 6789);
+				 ScoreMsg sm = new ScoreMsg("Unknown Alien", 0);
+				 oos = new ObjectOutputStream(s.getOutputStream());
+				 oos.writeObject(sm);
+				 oos.flush();
+			 } catch (UnknownHostException e) {
+				 e.printStackTrace();
+			 } catch (IOException e) {
+				 e.printStackTrace();
+			 }
 		}
 	}
 
