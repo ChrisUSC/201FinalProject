@@ -63,7 +63,7 @@ public class SignUp extends PApplet {
 		  
 		  cp5.addButton("SignUp")
 		   .setPosition((float) (3.3*Width/8),3*Height/4)
-		   .setImages(loadImage("files/signButton.png"), loadImage("files/signButton.png"), loadImage("files/signButton.png"))
+		   .setImages(loadImage("signButton.png"), loadImage("signButton.png"), loadImage("signButton.png"))
 		   .updateSize()
 		   .setValue(0)
 		   .activateBy(ControlP5.PRESSED);
@@ -71,11 +71,10 @@ public class SignUp extends PApplet {
 		   
 		  cp5.addButton("Back")
 		   .setPosition(50,50)
-		   .setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		   .setImages(loadImage("back.png"), loadImage("back.png"), loadImage("back.png"))
 		   .updateSize()
 		   .setValue(0)
 		   .activateBy(ControlP5.PRESSED);
-		   ;
 		} 
 
 	public void draw() {
@@ -88,7 +87,7 @@ public class SignUp extends PApplet {
 	
 	// get called when button pressed
 	public void SignUp(int value) throws IOException{
-		bg = loadImage("files/bg.jpg");
+		bg = loadImage("bg.jpg");
 		smooth();
 		if (firstTimeErr) {
 			firstTimeErr = false;
@@ -133,6 +132,7 @@ public class SignUp extends PApplet {
 				System.out.println("Sign up successful!");
 				err_msg = "Sign up successful!";
 				PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main(username));
+				LandIt.disableSketch(this);
 			}
 		}
 	}

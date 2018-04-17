@@ -32,14 +32,14 @@ public class LeaderBoard extends PApplet{
 	
 	public void setup() {
 		textSize(40); 
-		bg = loadImage("files/login.jpg");
-		logo = loadImage("files/leader.png");
+		bg = loadImage("login.jpg");
+		logo = loadImage("leader.png");
 		
 		cp5 = new ControlP5(this);
 		
 		cp5.addButton("Back")
 		.setPosition(25,25)
-		.setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		.setImages(loadImage("back.png"), loadImage("back.png"), loadImage("back.png"))
 		.updateSize()
 		.setValue(0)
 		.activateBy(ControlP5.PRESSED);	
@@ -103,7 +103,7 @@ public class LeaderBoard extends PApplet{
 	
 	public static void initializeBoard() {
 		for (int i = 0; i<5; i++) {
-			ScoreMsg sm = new ScoreMsg("Unkown Alien", 0);
+			ScoreMsg sm = new ScoreMsg("Unknown Alien", 0);
 			board.add(sm);
 		}
 		
@@ -115,6 +115,7 @@ public class LeaderBoard extends PApplet{
 			return;
 		}
 		PApplet.main("LandIt");
+		LandIt.disableSketch(this);
 	}
 	
 	public void keyPressed() {

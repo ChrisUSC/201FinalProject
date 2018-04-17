@@ -28,7 +28,7 @@ public class Login extends PApplet {
 		  PFont font = createFont("arial",40);
 		  cp5 = new ControlP5(this);
 
-		  bg = loadImage("files/bg.jpg");
+		  bg = loadImage("bg.jpg");
 		  smooth();
 		  // Add Logo and name of login		  
 		  
@@ -58,7 +58,7 @@ public class Login extends PApplet {
 		  
 		  cp5.addButton("LogIn")
 		   .setPosition((float) (3.3*Width/8),3*Height/4)
-		   .setImages(loadImage("files/logButton.png"), loadImage("files/logButton.png"), loadImage("files/logButton.png"))
+		   .setImages(loadImage("logButton.png"), loadImage("logButton.png"), loadImage("logButton.png"))
 		   .updateSize()
 		   .setValue(0)
 		   .activateBy(ControlP5.PRESSED);
@@ -66,7 +66,7 @@ public class Login extends PApplet {
 		   
 		  cp5.addButton("Back")
 		   .setPosition(50,50)
-		   .setImages(loadImage("files/back.png"), loadImage("files/back.png"), loadImage("files/back.png"))
+		   .setImages(loadImage("back.png"), loadImage("back.png"), loadImage("back.png"))
 		   .updateSize()
 		   .setValue(0)
 		   .activateBy(ControlP5.PRESSED);
@@ -106,6 +106,7 @@ public class Login extends PApplet {
 				err_msg = "Successfully logged in!";
 				checked = true;
 				PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main(username));
+				LandIt.disableSketch(this);
 				break;
 			} else if (username.toLowerCase().equals(user.getName())) {
 				// gets here b/c password incorrect
@@ -128,6 +129,7 @@ public class Login extends PApplet {
 		}
 		//LandIt.stopAudio();
 		PApplet.main("LandIt");
+		LandIt.disableSketch(this);
 	}	
 	
 	public void keyPressed() {

@@ -55,27 +55,27 @@ public class LandIt extends PApplet {
 		PFont font = createFont("arial",40);
 		cp5 = new ControlP5(this);
 		
-		bg = loadImage("files/login.jpg");
-		logo = loadImage("files/logo.png");
+		bg = loadImage("login.jpg");
+		logo = loadImage("logo.png");
 		smooth();
 		  
 		cp5.addButton("Play")
 			.setPosition(Width/4,Height/8)
-		    .setImages(loadImage("files/logo.png"), loadImage("files/logo.png"), loadImage("files/logo.png"))
+		    .setImages(loadImage("logo.png"), loadImage("logo.png"), loadImage("logo.png"))
 		    .updateSize()
 		   	.setValue(0)
 		   	.activateBy(ControlP5.PRESSED);
 			
 		cp5.addButton("LogIn")
 		.setPosition(1*Width/8,5*Height/8)
-	    .setImages(loadImage("files/logButton.png"), loadImage("files/logButton.png"), loadImage("files/logButton.png"))
+	    .setImages(loadImage("logButton.png"), loadImage("logButton.png"), loadImage("logButton.png"))
 	    .updateSize()
 	   	.setValue(0)
 	   	.activateBy(ControlP5.PRESSED);
 		   
 		cp5.addButton("SignUp")
 		     .setPosition(5*Width/8,5*Height/8)
-		     .setImages(loadImage("files/signButton.png"), loadImage("files/signButton.png"), loadImage("files/signButton.png"))
+		     .setImages(loadImage("signButton.png"), loadImage("signButton.png"), loadImage("signButton.png"))
 		     .updateSize()
 		   	 .setValue(0)
 		   	 .activateBy(ControlP5.PRESSED);
@@ -122,8 +122,19 @@ public class LandIt extends PApplet {
 	
 	public static void playAudio(String name) {
 		String[] cmd = {"afplay", name};
+		//String[] cmd = {"ls", "src"};
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
+
+			Scanner scanner = new Scanner(p.getInputStream());
+			scanner.useDelimiter("\r\n");
+			 
+			while (scanner.hasNext()) {
+			    System.out.println(scanner.next());
+			}
+			 
+			scanner.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,6 +151,22 @@ public class LandIt extends PApplet {
 		}
 	}
 	
+	public static void say(String input) {
+		String[] cmd = {"say", input};
+		try {
+			Process p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	static final void disableSketch(PApplet p) {
+		  //p.setVisible(false);
+		  p.noLoop();
+		  p.dispose();
+	}
+	
 	public void Play(int value) {
 		if (firstTimePlay) {
 			firstTimePlay = false;
@@ -147,6 +174,7 @@ public class LandIt extends PApplet {
 		}
 		//PApplet.main("Main");
 		PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Main("Guest"));
+		disableSketch(this);
 	}
 	
 	public void LogIn(int value) {
@@ -155,6 +183,7 @@ public class LandIt extends PApplet {
 			return;
 		}
 		PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new Login(data));
+		disableSketch(this);
 	}
 	
 	public void SignUp(int value) {
@@ -163,6 +192,7 @@ public class LandIt extends PApplet {
 			return;
 		}
 		PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, new SignUp(data));
+		disableSketch(this);
 	}
 	
 	// function to ask if user wants login or sign up

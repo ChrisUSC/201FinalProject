@@ -83,6 +83,10 @@ public class Main extends PApplet {
 				System.exit(0);
 			}
 		}
+		
+		if (rocketLanded || rocketCrashed) {
+			LandIt.disableSketch(this);
+		}
 
 		if (spaceX.getXpos() + 55 > ASDSxpos && spaceX.getXpos() < ASDSxpos + 200 && spaceX.getYpos() > Height - 150
 				&& spaceX.getYpos() < Height - 130) {
