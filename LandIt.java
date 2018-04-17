@@ -32,6 +32,11 @@ public class LandIt extends PApplet {
 	}
 	
 	public void draw() {
+		if (cp5.isMouseOver(cp5.getController("SignUp")) || cp5.isMouseOver(cp5.getController("LogIn")) || cp5.isMouseOver(cp5.getController("Play"))){
+			cursor(HAND);
+		} else {
+			cursor(ARROW);
+		}
 		background(bg);
 		fill(255);
 		textSize(12); 

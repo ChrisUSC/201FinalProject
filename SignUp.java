@@ -49,13 +49,14 @@ public class SignUp extends PApplet {
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
+		    .setPasswordMode(true)
 		    .setColorBackground(0xffffff)
 		    .setColor(color(255, 255, 255));
 		 
 		  textFont(font);
 		  Label label1 = t1.getCaptionLabel(); 
 		  label1.getStyle().setPaddingLeft(Width/6);
-		  label1.getStyle().setPaddingTop(-100);
+		  label1.getStyle().setPaddingTop(-130);
 		  
 		  Label label2 = t2.getCaptionLabel(); 
 		  label2.getStyle().setPaddingLeft(Width/6);
@@ -78,11 +79,18 @@ public class SignUp extends PApplet {
 		} 
 
 	public void draw() {
-	  background(bg);
-	  textSize(25); 
-	  fill(255, 0, 0);
-	  //text(err_msg, 2*Width/8, 7*Height/8);
-	  text(err_msg, 2*Width/8, (float) (4.5*Height/8));
+		if (cp5.isMouseOver(cp5.getController("SignUp")) || cp5.isMouseOver(cp5.getController("Back"))){
+			cursor(HAND);
+		} else if (cp5.isMouseOver(cp5.getController("Username")) || cp5.isMouseOver(cp5.getController("Password"))) {
+			cursor(TEXT);
+		} else {
+			cursor(ARROW);
+		}
+		background(bg);
+		textSize(25); 
+		fill(255, 0, 0);
+		//text(err_msg, 2*Width/8, 7*Height/8);
+		text(err_msg, 2*Width/8, (float) (4.5*Height/8));
 	}
 	
 	// get called when button pressed
@@ -145,15 +153,11 @@ public class SignUp extends PApplet {
 		PApplet.main("LandIt");
 	}
 
-	/*
-	public void controlEvent(ControlEvent theEvent) {
-	  if(theEvent.isAssignableFrom(Textfield.class)) {
-	    println("controlEvent: accessing a string from controller '"
-	            +theEvent.getName()+"': "
-	            +theEvent.getStringValue()
-	            );
-	  }
+	public void keyPressed() {
+		if(keyCode == ESC){
+			LandIt.stopAudio();
+			System.exit(0);
+		}
 	}
-	*/
 	
 }

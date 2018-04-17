@@ -45,12 +45,13 @@ public class Login extends PApplet {
 		    .setSize(Width/2, 40)
 		    .setFont(font)
 		    .setAutoClear(true)
+		    .setPasswordMode(true)
 		    .setColorBackground(0xffffff);
 		 
 		  textFont(font);
 		  Label label1 = t1.getCaptionLabel(); 
 		  label1.getStyle().setPaddingLeft(Width/6);
-		  label1.getStyle().setPaddingTop(-100);
+		  label1.getStyle().setPaddingTop(-130);
 		  
 		  Label label2 = t2.getCaptionLabel(); 
 		  label2.getStyle().setPaddingLeft(Width/6);
@@ -74,6 +75,14 @@ public class Login extends PApplet {
 		} 
 
 	public void draw() {
+		if (cp5.isMouseOver(cp5.getController("LogIn")) || cp5.isMouseOver(cp5.getController("Back"))){
+			cursor(HAND);
+		} else if (cp5.isMouseOver(cp5.getController("Username")) || cp5.isMouseOver(cp5.getController("Password"))) {
+			cursor(TEXT);
+		} else {
+			cursor(ARROW);
+		}
+		
 		background(bg);
 		textSize(25); 
 		fill(255, 0, 0);
